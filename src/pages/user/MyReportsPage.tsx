@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { Link } from "react-router-dom";
 import ReportCard from "../../components/ReportCard";
 import { useMyReports } from "../../hooks/useLostReports";
-import { AuthContext } from "../../context/userContext";
+import { AuthContext } from "../../context/authContext";
 
 const MyReportsPage=()=>
 {

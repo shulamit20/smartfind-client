@@ -12,8 +12,7 @@ import AdminRequestsPage from "../pages/admin/AdminRequestsPage";
 import AdminFoundItemsPage from "../pages/admin/AdminFoundItemsPage";
 import FoundItemFormPage from "../pages/admin/FoundItemFormPage";
 
-export const router=createBrowserRouter
-(
+export const router=createBrowserRouter(
 [
 {
     path: "/", element: <AuthProvider><App /></AuthProvider>,children:[

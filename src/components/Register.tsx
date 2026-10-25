@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { AuthContext } from "../context/userContext";
+import { AuthContext } from "../context/authContext";
 import { Link, useNavigate } from "react-router-dom";
 import { useRegister } from "../hooks/useAuth";
 
@@ -41,9 +41,9 @@ export default function Register() {
   });
 
   const onSubmit = (data: RegisterFormValues) => {
-    const { confirmPassword, ...userData } = data;
+    const { fullName, email, password } = data;
 
-    registerMutation.mutate(userData, {
+    registerMutation.mutate({ fullName, email, password }, {
       onSuccess: (result) => {
         login(result.user, result.token);
         navigate("/my-reports");

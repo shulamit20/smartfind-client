@@ -1,75 +1,41 @@
-# React + TypeScript + Vite
+# SmartFind – Client
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+React + TypeScript + Vite client for the SmartFind lost & found system.
 
-Currently, two official plugins are available:
+## Local development
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
-
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
+```bash
+npm install
+cp .env.example .env   # set VITE_API_URL to your server, e.g. http://localhost:3000/api
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://npmx.dev/package/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://npmx.dev/package/eslint-plugin-react-dom) for React-specific lint rules:
+| Script            | Description                         |
+| ----------------- | ----------------------------------- |
+| `npm run dev`     | Start the dev server                |
+| `npm run build`   | Type-check and build into `dist/`   |
+| `npm run preview` | Serve the production build locally  |
+| `npm run lint`    | Run ESLint                          |
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## Environment variables
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+| Name           | Description                                              |
+| -------------- | -------------------------------------------------------- |
+| `VITE_API_URL` | Base URL of the server API, including `/api` at the end  |
 
-```
+`VITE_*` variables are embedded into the bundle **at build time** – after changing one, rebuild / redeploy.
+
+## Deploying to Render (Static Site)
+
+1. Push this repository to GitHub/GitLab and create a new **Static Site** in Render.
+2. Settings:
+   - **Build Command:** `npm ci && npm run build`
+   - **Publish Directory:** `dist`
+3. Environment variables:
+   - `VITE_API_URL` = `https://<your-server>.onrender.com/api`
+   - `NODE_VERSION` = `22`
+4. **Redirects/Rewrites** (required for client-side routing, otherwise refreshing a page returns 404):
+   - Source: `/*` → Destination: `/index.html` → Action: **Rewrite**
+5. On the server, allow the client's Render URL in the CORS configuration.
+
+> On Render's free plan the server sleeps when idle, so the first request may take 30–50 seconds.

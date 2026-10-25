@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { Link } from "react-router-dom";
 import RequestCard from "../../components/RequestCard"
 import { useRequests } from "../../hooks/useOwnershipRequests";
-import { AuthContext } from "../../context/userContext";
+import { AuthContext } from "../../context/authContext";
 
 
 const AdminRequestsPage=()=>
