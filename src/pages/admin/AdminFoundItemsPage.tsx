@@ -81,9 +81,15 @@ const AdminFoundItemsPage = () => {
                   {item.status === "Available" && (
                     <button
                       onClick={() => {
-                        if (window.confirm("למחוק את הפריט? גם הבקשות הממתינות עליו יימחקו.")) {
+                        if (window.confirm("למחוק את הפריט?")) {
                           deleteMutation.mutate(item.id, {
                             onSuccess: () => toast.success("הפריט נמחק"),
+                            onError: (err) =>
+                              toast.error(
+                                err.response?.status === 409
+                                  ? "יש על הפריט בקשות ממתינות. יש לאשר או לדחות אותן לפני המחיקה"
+                                  : "שגיאה במחיקת הפריט"
+                              ),
                           });
                         }
                       }}
