@@ -1,7 +1,7 @@
 import type { Match } from "../types/foundItem";
 import type { LostReportInput ,LostReport, LostReportsResponse} from "../types/lostReport";
 import { getAuthHeaders } from "./authHeaders";
-import baseUrl from "./axiosInstance";
+import baseUrl, { MAX_PAGE_SIZE } from "./axiosInstance";
 
 export const createLostReport=async (lostReport:LostReportInput )=>{
 const res=await baseUrl.post<LostReport>("/lost-reports",lostReport,getAuthHeaders());
@@ -14,7 +14,7 @@ return res.data;
 export const getMyReports= async()=>{
     const res = await baseUrl.get<LostReportsResponse>(
     "/lost-reports",
-    getAuthHeaders()
+    { ...getAuthHeaders(), params: { pageSize: MAX_PAGE_SIZE } }
   );
     return res.data
 }

@@ -1,7 +1,7 @@
 
 import type { FoundItem, FoundItemInput, FoundItemsResponse } from "../types/foundItem";
 import { getAuthHeaders } from "./authHeaders";
-import baseUrl from "./axiosInstance";
+import baseUrl, { MAX_PAGE_SIZE } from "./axiosInstance";
 
 export const getFoundItem= async(id:number)=>{
     const res = await baseUrl.get<FoundItem>(
@@ -13,7 +13,7 @@ export const getFoundItem= async(id:number)=>{
 export const getFoundItems = async () => {
   const res = await baseUrl.get<FoundItemsResponse>(
     "/found-items",
-    getAuthHeaders()
+    { ...getAuthHeaders(), params: { pageSize: MAX_PAGE_SIZE } }
   );
 
   return res.data;

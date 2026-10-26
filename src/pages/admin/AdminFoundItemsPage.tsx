@@ -48,10 +48,6 @@ const AdminFoundItemsPage = () => {
         {lookupsError && <p className="text-[13px] text-rejected">לא ניתן לטעון את הקטגוריות לסינון.</p>}
       </div>
 
-      {deleteMutation.isError && (
-        <p className="alert-error mb-5">המחיקה נכשלה. ייתכן שהפריט כבר הוחזר. נסו לרענן את הדף.</p>
-      )}
-
       {filteredItems.length === 0 ? (
         <p className="empty">
           {selectedCategory === null
